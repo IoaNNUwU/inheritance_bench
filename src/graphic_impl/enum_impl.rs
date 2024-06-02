@@ -1,31 +1,22 @@
 use super::*;
 
-pub struct AllComponents {
-    // Приватное поле - деталь реализации.
+#[derive(Default)]
+pub struct EnumGraphics {
     list: Vec<EnumCompWrapper>
 }
 
-// Публичный интерфейс структуры AllComponents 
-// состоит из публичной функции draw и методов для
-// добавления элементов. (см строку 26)
-impl Draw for AllComponents {
+impl Draw for EnumGraphics {
     fn draw(&self, screen: &mut Screen) {
         for enum_comp in &self.list {
-            // этот вызов статический, потому что
-            // EnumCompWrapper реализует Draw используя
-            // match, а не виртуальный вызов. (см строку 52)
             enum_comp.draw(screen);
         }
     }
 }
 
-impl AllComponents {
+impl EnumGraphics {
     pub fn new() -> Self {
         Self { list: Vec::new() }
     }
-    // Приходится делать отдельные методы для каждой структуры,
-    // потому что enum должен статически знать все типы во время
-    // компиляции.
     pub fn add_star(&mut self, star: Star) {
         self.list.push(EnumCompWrapper::from(star));
     }
@@ -37,10 +28,6 @@ impl AllComponents {
     }
 }
 
-// Этот enum приватный, потому что это деталь реализации.
-//
-// Реализацию легко упростить с помощью макросов, но 
-// приведу пример без них для простоты.
 enum EnumCompWrapper {
     Rect(Rectangle),
     Trian(Triangle),

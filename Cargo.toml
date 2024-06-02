@@ -1,3 +1,4 @@
+workspace = { members = ["crates/easy_cpp"] }
 [package]
 name = "inheritance_bench"
 version = "0.1.0"
